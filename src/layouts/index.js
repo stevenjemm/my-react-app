@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 
 import Header from '../components/header'
 import './index.css'
+import Footer from '../components/Footer';
 
 const Layout = ({ children, data }) => (
   <div>
@@ -16,6 +17,10 @@ const Layout = ({ children, data }) => (
     />
     <Header />
     {children()}
+    
+    <Footer data={data}>
+      Oh, I also take photos...check my album. If you have more time and are really up to the challenge, peep the blog my fiancée and I created! <a href="mailto:info@bottled-sunshine.com">Email Us</a> to find out more! © 2018
+    </Footer>
   </div>
 )
 
@@ -32,6 +37,15 @@ export const query = graphql`
         title
         description
         keywords
+      }
+    }
+    allContentfulLink(sort:{ fields: [createdAt], order: ASC }){
+      edges {
+        node {
+          title
+          url
+          createdAt
+        }
       }
     }
   }
