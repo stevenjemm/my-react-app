@@ -30,7 +30,21 @@ class Header extends React.Component {
   }
 
   handlePurchase = (token) => {
+    const amount = 5000
+    const description = "My awesome product"
 
+    const bodyObject = {
+      tokenId: token.id,
+      email: token.email,
+      name: token.name,
+      description,
+      amount
+    }
+
+    fetch('http://localhost:9000/stripe-charge', {
+      method: 'POST',
+      body: JSON.stringify(bodyObject)
+    })
   }
 
   render() {
@@ -44,9 +58,12 @@ class Header extends React.Component {
           
           <StripeCheckout 
             amount={5000}
-            image="https://cl.ly/0K2f1V3K3h0D/download/Logo.jpg">
+            image="https://cl.ly/0K2f1V3K3h0D/download/Logo.jpg"
+            token={this.handlePurchase}
+            stripeKey={'pk_test_scg3pN9vdxUAflqlS3FsYQ8Q'}>
             <button>Buy</button>
           </StripeCheckout>
+
         </div>
       </div>
     )
